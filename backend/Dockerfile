@@ -8,12 +8,13 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install all dependencies (including dev dependencies for build)
-RUN npm ci
+# Skip postinstall script to avoid building before source files are copied
+RUN npm ci --ignore-scripts
 
 # Copy source code
 COPY . .
 
-# Build the application
+# Build the application manually
 RUN npm run build
 
 # Remove dev dependencies to reduce image size
