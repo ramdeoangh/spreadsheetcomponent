@@ -13,7 +13,8 @@
     "lint:fix": "eslint src/**/*.ts --fix",
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
-    "postinstall": "npm run build"
+    "postinstall": "npm run build",
+    "vercel-build": "npm run build"
   },
   "keywords": [
     "express",

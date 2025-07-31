@@ -1,5 +1,6 @@
 import { useEffect, useRef, useCallback, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
+import { WEBSOCKET_CONFIG } from '../utils/constants';
 
 interface WebSocketEvent {
   type: 'spreadsheet_update' | 'action_events_update' | 'state_events_update' | 'connected' | 'pong' | 'test_message';
@@ -75,11 +76,11 @@ export const useWebSocket = (
           globalSocket = null;
         }
 
-        const socket = io('http://localhost:3001', {
+        const socket = io(WEBSOCKET_CONFIG.URL, {
           transports: ['websocket'],
           autoConnect: true,
           reconnection: false, // Disable auto-reconnection
-          timeout: 10000,
+          timeout: WEBSOCKET_CONFIG.TIMEOUT,
           forceNew: true
         });
 

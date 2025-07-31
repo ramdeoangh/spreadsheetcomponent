@@ -2,6 +2,7 @@ import { Server as SocketIOServer, Socket } from 'socket.io';
 import { Server as HTTPServer } from 'http';
 import logger from '../utils/logger';
 import type { UserEvent, ActionEvent, StateEvent } from '../types';
+import { config } from '../config';
 
 export class WebSocketService {
   private io: SocketIOServer | null = null;
@@ -10,9 +11,9 @@ export class WebSocketService {
   initialize(server: HTTPServer): void {
     this.io = new SocketIOServer(server, {
       cors: {
-        origin: "http://localhost:5173",
+        origin: config.cors.origin,
         methods: ["GET", "POST"],
-        credentials: true
+        credentials: config.cors.credentials
       },
       transports: ['websocket'],
       pingTimeout: 60000,

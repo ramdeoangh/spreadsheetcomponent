@@ -1,14 +1,13 @@
 import axios from 'axios';
 import type { UserEvent, ActionResponse, StateResponse } from '../types';
-
-const API_BASE_URL = 'http://localhost:3001/api';
+import { API_CONFIG } from '../utils/constants';
 
 const api = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: API_CONFIG.BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 10000, // 10 second timeout
+  timeout: API_CONFIG.TIMEOUT,
 });
 
 // Request interceptor for logging

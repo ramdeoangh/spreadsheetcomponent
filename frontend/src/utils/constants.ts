@@ -1,7 +1,14 @@
 // API Configuration
 export const API_CONFIG = {
-  BASE_URL: 'http://localhost:3001/api',
+  BASE_URL: import.meta.env.VITE_API_URL || 'http://localhost:3001/api',
   TIMEOUT: 10000, // 10 seconds
+} as const;
+
+// WebSocket Configuration
+export const WEBSOCKET_CONFIG = {
+  URL: import.meta.env.VITE_WEBSOCKET_URL || 'http://localhost:3001',
+  TIMEOUT: 10000,
+  RECONNECTION_ATTEMPTS: 3,
 } as const;
 
 // Spreadsheet Configuration

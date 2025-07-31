@@ -70,11 +70,11 @@ class Server {
     const host = config.server.host;
     
     this.server.listen(port, host, () => {
-      logger.info('🚀 Server running on http://localhost:3001');
-      logger.info('📊 Environment: development');
-      logger.info('🔗 API Base URL: /api');
-      logger.info('🌐 CORS Origin: http://localhost:5173');
-      logger.info('🔌 WebSocket: ws://localhost:3001');
+      logger.info(`🚀 Server running on http://${host}:${port}`);
+      logger.info(`📊 Environment: ${config.server.nodeEnv}`);
+      logger.info(`🔗 API Base URL: ${config.api.prefix}`);
+      logger.info(`🌐 CORS Origin: ${config.cors.origin}`);
+      logger.info(`🔌 WebSocket: ws://${host}:${port}`);
       logger.info('\n📋 Available endpoints:');
       logger.info('  POST /api/message - Accept UserEvent');
       logger.info('  GET  /api/action - Get ActionEvents');
