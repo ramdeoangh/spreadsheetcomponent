@@ -36,7 +36,43 @@ The `vercel.json` file is already configured to:
 
 ## 🔧 Backend Deployment
 
-### Option 1: Deploy to Vercel (Recommended)
+### Option 1: Deploy to Render (Recommended)
+
+Render provides excellent WebSocket support and is perfect for real-time applications.
+
+1. **Prepare your backend**:
+   ```bash
+   cd backend
+   npm install
+   npm run build
+   ```
+
+2. **Deploy to Render**:
+   - Go to https://dashboard.render.com
+   - Create New Web Service
+   - Connect your GitHub repository
+   - Set Root Directory to `backend`
+   - Build Command: `npm install && npm run build`
+   - Start Command: `npm start`
+
+3. **Set environment variables in Render**:
+   ```env
+   NODE_ENV=production
+   PORT=3001
+   HOST=0.0.0.0
+   CORS_ORIGIN=https://your-frontend-domain.vercel.app
+   LOG_LEVEL=info
+   ENABLE_CONSOLE_LOG=true
+   ENABLE_FILE_LOG=false
+   ```
+
+4. **Render Advantages**:
+   - Full WebSocket support with persistent connections
+   - No cold starts affecting real-time performance
+   - Auto-scaling based on traffic
+   - Built-in monitoring and logging
+
+### Option 2: Deploy to Vercel
 
 1. **Prepare your backend**:
    ```bash
@@ -62,12 +98,12 @@ The `vercel.json` file is already configured to:
    ENABLE_FILE_LOG=false
    ```
 
-4. **Vercel Backend Configuration**:
-   - The `backend/vercel.json` handles routing for API and WebSocket
-   - Builds TypeScript to JavaScript
-   - Sets up serverless functions with 30-second timeout
+4. **Vercel Limitations**:
+   - WebSocket connections may have cold starts
+   - Function timeout limits (30-60 seconds)
+   - State persistence limitations
 
-### Option 2: Deploy to Railway/Render/Heroku
+### Option 3: Deploy to Railway/Heroku
 
 1. **Prepare your backend**:
    ```bash
@@ -89,10 +125,9 @@ The `vercel.json` file is already configured to:
 
 3. **Deploy to your preferred platform**:
    - **Railway**: Connect your GitHub repo and deploy
-   - **Render**: Create a new Web Service and deploy
    - **Heroku**: Use the Procfile and deploy
 
-### Option 3: Deploy to VPS/Docker
+### Option 4: Deploy to VPS/Docker
 
 1. **Build and run with Docker**:
    ```bash
@@ -131,7 +166,7 @@ CORS_ORIGIN=https://your-frontend-domain.vercel.app
 
 ### For HTTPS (Recommended)
 
-1. **Backend**: Use a service that provides HTTPS (Vercel, Railway, Render, etc.)
+1. **Backend**: Use a service that provides HTTPS (Render, Vercel, Railway, etc.)
 2. **Frontend**: Vercel automatically provides HTTPS
 3. **WebSocket**: Ensure your backend supports WSS (secure WebSocket)
 
@@ -149,8 +184,8 @@ VITE_WEBSOCKET_URL=http://your-backend-domain.com
 
 1. **CORS Errors**: Ensure `CORS_ORIGIN` in backend matches your frontend domain
 2. **WebSocket Connection Failed**: Check if your backend supports WebSocket connections
-3. **Environment Variables Not Loading**: Ensure variables are set in Vercel dashboard
-4. **Vercel Function Timeout**: Increase timeout in `vercel.json` if needed
+3. **Environment Variables Not Loading**: Ensure variables are set in deployment platform
+4. **Function Timeout**: Increase timeout or break down operations
 
 ### Debug Steps
 
@@ -165,12 +200,12 @@ VITE_WEBSOCKET_URL=http://your-backend-domain.com
 - Domain: `https://my-spreadsheet-app.vercel.app`
 - Environment Variables:
   ```env
-  VITE_API_URL=https://my-backend.vercel.app/api
-  VITE_WEBSOCKET_URL=https://my-backend.vercel.app
+  VITE_API_URL=https://my-backend.onrender.com/api
+  VITE_WEBSOCKET_URL=https://my-backend.onrender.com
   ```
 
-### Backend (Vercel)
-- Domain: `https://my-backend.vercel.app`
+### Backend (Render)
+- Domain: `https://my-backend.onrender.com`
 - Environment Variables:
   ```env
   CORS_ORIGIN=https://my-spreadsheet-app.vercel.app
@@ -197,15 +232,16 @@ npm start
 - **Backend**: Use your platform's monitoring tools
 - **Logs**: Check application logs for errors and performance issues
 
-## 🔧 Vercel Backend Specific Notes
+## 🔧 Platform-Specific Notes
 
-### WebSocket Support
-Vercel serverless functions have limitations with WebSocket connections. For full WebSocket support, consider:
-- Using Railway or Render for the backend
-- Or implementing a hybrid approach with WebSocket proxy
+### Render (Recommended for Backend)
+- **Full WebSocket support** with persistent connections
+- **No cold starts** affecting real-time performance
+- **Auto-scaling** based on traffic
+- **Built-in monitoring** and logging
 
-### Function Timeout
-The backend is configured with a 30-second timeout. For long-running operations, consider:
-- Breaking down operations into smaller chunks
-- Using background jobs
-- Implementing streaming responses 
+### Vercel (Good for Frontend, Limited for Backend)
+- **Excellent frontend deployment**
+- **WebSocket limitations** for backend
+- **Function timeout** constraints
+- **Cold starts** may affect real-time performance 

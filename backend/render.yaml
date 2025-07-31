@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: spreadsheet-backend
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3001
+      - key: HOST
+        value: 0.0.0.0
+      - key: LOG_LEVEL
+        value: info
+      - key: ENABLE_CONSOLE_LOG
+        value: true
+      - key: ENABLE_FILE_LOG
+        value: false
+      - key: API_RATE_LIMIT_WINDOW_MS
+        value: 900000
+      - key: API_RATE_LIMIT_MAX
+        value: 100
+    # Update this with your frontend domain after deployment
+    # - key: CORS_ORIGIN
+    #   value: https://your-frontend-domain.vercel.app 
