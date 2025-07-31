@@ -14,7 +14,7 @@ describe('SpreadsheetService', () => {
       expect(result.userEvent.message).toBe('A1 Hello World');
       expect(result.actionEvent.action).toBe('UPDATE_CELL');
       expect(result.actionEvent.target).toEqual({ row: 0, col: 0 });
-      expect(result.parsedCommand.cellRef).toBe('A1');
+      expect(result.parsedCommand.cell).toBe('A1');
     });
 
     it('should process a command with equals sign', async () => {
@@ -22,7 +22,7 @@ describe('SpreadsheetService', () => {
       
       expect(result.userEvent.message).toBe('B5 = 42');
       expect(result.actionEvent.target).toEqual({ row: 4, col: 1 });
-      expect(result.parsedCommand.cellRef).toBe('B5');
+      expect(result.parsedCommand.cell).toBe('B5');
       expect(result.parsedCommand.value).toBe('42');
     });
 
@@ -78,8 +78,8 @@ describe('SpreadsheetService', () => {
       expect(state).toHaveProperty('rows');
       expect(state).toHaveProperty('columns');
       expect(state).toHaveProperty('headers');
-      expect(state.rows).toBe(10);
-      expect(state.columns).toBe(10);
+      expect(state.rows).toBe(100);
+      expect(state.columns).toBe(26);
       expect(Array.isArray(state.headers)).toBe(true);
     });
   });
